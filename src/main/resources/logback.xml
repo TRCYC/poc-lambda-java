@@ -11,7 +11,7 @@
         </encoder>
     </appender>
 
-    <root level="${log.level}">
+    <root level="${LOGLEVEL}">
         <appender-ref ref="STDOUT" />
     </root>
 
