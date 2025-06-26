@@ -1,11 +1,10 @@
-# Use Amazon Corretto as the base image for Java applications
-FROM amazoncorretto:11
+FROM public.ecr.aws/lambda/java:21
 
-# Set the working directory
-WORKDIR /var/task
+# Set the working directory to the Lambda task root
+WORKDIR ${LAMBDA_TASK_ROOT}
 
-# Copy your application JAR file into the container
-COPY build/libs/app.jar app.jar
+# Copy the compiled Java application JAR
+COPY build/libs/app.jar ${LAMBDA_TASK_ROOT}/
 
-# Set the entry point for the Lambda function
-#ENTRYPOINT ["java", "-cp", "app.jar", "com.rcyc.LambdaHandler"]
+# Set the Lambda handler
+CMD [ "com.rcyc.LambdaHandler::handleRequest" ]
