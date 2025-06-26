@@ -23,8 +23,26 @@ dependencies {
     // JUnit 5 for testing
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
 }
+
 jar {
   manifest {
       attributes 'Main-Class': 'com.rcyc.LambdaHandler'
   }
+}
+
+// Task to name the jar
+tasks.named('jar') {
+    archiveBaseName.set('app')
+    archiveVersion.set('')
+}
+
+// Task to copy dependencies to a specific directory
+task copyDependencies(type: Copy) {
+    from configurations.runtimeClasspath
+    into 'build/dependencies'
+}
+
+// Make copyDependencies a dependency of the build task
+tasks.named('build') {
+    dependsOn copyDependencies
 }
