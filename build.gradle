@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'application'
-    id 'com.bmuschko.docker-remote-api' version '7.1.0' // Updated Docker plugin
+    id 'com.github.johnrengelman.shadow' version '7.1.2' // Add the shadow plugin
 }
 
 group = 'com.example'
@@ -21,36 +21,24 @@ dependencies {
     implementation 'org.slf4j:slf4j-api:1.7.30'
     implementation 'ch.qos.logback:logback-classic:1.2.10'
     
-    // Optional: Apache HttpClient for making HTTP requests
-    implementation 'org.apache.httpcomponents:httpclient:4.5.13'
-    
     // JUnit 5 for testing
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
 }
 
 application {
-    // Define the main class for the application
     mainClassName = 'com.rcyc.LambdaHandler'
 }
 
-// Docker tasks
-import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
-import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
+tasks.named('test') {
+    useJUnitPlatform()
+}
 
-tasks.named('jar') {
+// Use the shadowJar task to create a fat JAR
+tasks.named('shadowJar') {
     archiveBaseName.set('app')
     archiveVersion.set('')
-}
-
-task buildDockerImage(type: DockerBuildImage) {
-    inputDir = project.file('.')
-    images.add("${project.group}/${project.name}:${project.version}")
-}
-
-task pushDockerImage(type: DockerPushImage) {
-    dependsOn buildDockerImage
-    images.add("${project.group}/${project.name}:${project.version}")
+    archiveClassifier.set('') // Remove the default 'all' classifier
 }
 
 // Set the default tasks
-defaultTasks 'clean', 'build'
+defaultTasks 'clean', 'shadowJar'

@@ -29,8 +29,8 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
 
-      - name: Build with Gradle
-        run: ./gradlew clean build
+      - name: Build with Gradle (Shadow JAR)
+        run: ./gradlew clean shadowJar
 
       - name: List contents of app.jar
         run: jar tf build/libs/app.jar
