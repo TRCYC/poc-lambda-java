@@ -32,6 +32,9 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew clean build
 
+      - name: List contents of app.jar
+        run: jar tf build/libs/app.jar
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
