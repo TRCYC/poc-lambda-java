@@ -14,6 +14,9 @@ public class LambdaHandler implements RequestHandler<Object, String> {
         // Log a simple message
         logger.info("Lambda function invoked with request: {}", context);
 
+        logger.debug("Lambda function completed");
+
+
         // Return a basic response
         return "Completed";
     }
