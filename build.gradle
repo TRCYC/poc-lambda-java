@@ -24,8 +24,8 @@ dependencies {
     // Optional: Apache HttpClient for making HTTP requests
     implementation 'org.apache.httpcomponents:httpclient:4.5.13'
     
-    // Optional: JUnit for testing
-    testImplementation 'junit:junit:4.13.2'
+    // JUnit 5 for testing
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
 }
 
 application {
