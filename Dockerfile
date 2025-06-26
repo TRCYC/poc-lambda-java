@@ -8,4 +8,4 @@ WORKDIR /var/task
 COPY build/libs/app.jar app.jar
 
 # Set the entry point for the Lambda function
-ENTRYPOINT ["java", "-cp", "app.jar", "com.rcyc.LambdaHandler"]
+#ENTRYPOINT ["java", "-cp", "app.jar", "com.rcyc.LambdaHandler"]
