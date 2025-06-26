@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'application'
-    id 'com.palantir.docker' version '0.25.0'
+    id 'com.bmuschko.docker-remote-api' version '7.1.0' // Updated Docker plugin
 }
 
 group = 'com.example'
@@ -12,52 +12,39 @@ repositories {
     mavenCentral()
 }
 
-application {
-    // Define the main class for the application
-    mainClassName = 'com.rcyc.LambdaHandler'
-}
-
-// Optional: Docker integration
-docker {
-    name "${project.group}/${project.name}:${project.version}"
-    files tasks.jar.archiveFile
-    buildArgs(['JAR_FILE': tasks.jar.archiveFileName.get()])
-}
-
-task buildDocker(type: Docker) {
-    dependsOn build
-    buildArgs = ['JAR_FILE': jar.archiveFileName.get()]
-}
-
-// Optional: Task to create a fat JAR (all dependencies included)
-task fatJar(type: Jar) {
-    archiveClassifier.set('all')
-    from sourceSets.main.output
-
-    dependsOn configurations.runtimeClasspath
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-    manifest {
-        attributes 'Main-Class': application.mainClassName
-    }
-}
-
 dependencies {
     // AWS Lambda dependencies
     implementation 'com.amazonaws:aws-lambda-java-core:1.2.1'
     implementation 'com.amazonaws:aws-lambda-java-events:3.10.0'
     
     // Logging
-    implementation 'org.slf4j:slf4j-simple:1.7.30'
-    implementation 'ch.qos.logback:logback-classic:1.2.10'
     implementation 'org.slf4j:slf4j-api:1.7.30'
+    implementation 'ch.qos.logback:logback-classic:1.2.10'
     
     // Optional: Apache HttpClient for making HTTP requests
     implementation 'org.apache.httpcomponents:httpclient:4.5.13'
     
     // Optional: JUnit for testing
     testImplementation 'junit:junit:4.13.2'
+}
+
+application {
+    // Define the main class for the application
+    mainClassName = 'com.rcyc.LambdaHandler'
+}
+
+// Docker tasks
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
+
+task buildDockerImage(type: DockerBuildImage) {
+    inputDir = project.file('.')
+    images.add("${project.group}/${project.name}:${project.version}")
+}
+
+task pushDockerImage(type: DockerPushImage) {
+    dependsOn buildDockerImage
+    images.add("${project.group}/${project.name}:${project.version}")
 }
 
 // Set the default tasks
