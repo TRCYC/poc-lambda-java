@@ -37,6 +37,11 @@ application {
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
 
+tasks.named('jar') {
+    archiveBaseName.set('app')
+    archiveVersion.set('')
+}
+
 task buildDockerImage(type: DockerBuildImage) {
     inputDir = project.file('.')
     images.add("${project.group}/${project.name}:${project.version}")
