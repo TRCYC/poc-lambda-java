@@ -29,11 +29,8 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
 
-      - name: Build with Gradle (Shadow JAR)
-        run: ./gradlew clean shadowJar
-
-      - name: List contents of app.jar
-        run: jar tf build/libs/app.jar
+      - name: Build with Gradle
+        run: ./gradlew clean build
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
