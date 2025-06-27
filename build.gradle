@@ -4,7 +4,11 @@ plugins {
 
 group 'com.rcyc'
 version '1.0-SNAPSHOT'
-sourceCompatibility = 11
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
 
 repositories {
   mavenCentral()
@@ -15,13 +19,22 @@ tasks.named('test') {
 }
 
 dependencies {
+  // Lambda
   implementation 'com.amazonaws:aws-lambda-java-core:1.2.1'
+
+  // Lombok
+  compileOnly 'org.projectlombok:lombok:1.18.32'
+  annotationProcessor 'org.projectlombok:lombok:1.18.32'
+  testCompileOnly 'org.projectlombok:lombok:1.18.32'
+  testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
+
   // Logging
-    implementation 'org.slf4j:slf4j-api:1.7.30'
-    implementation 'ch.qos.logback:logback-classic:1.2.10'
+  implementation 'org.slf4j:slf4j-api:1.7.30'
+  implementation 'ch.qos.logback:logback-classic:1.2.10'
     
-    // JUnit 5 for testing
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+  // JUnit 5 for testing
+  testImplementation platform('org.junit:junit-bom:5.10.2')
+  testImplementation 'org.junit.jupiter:junit-jupiter-engine'
 }
 
 jar {

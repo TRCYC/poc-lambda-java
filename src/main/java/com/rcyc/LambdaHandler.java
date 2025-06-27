@@ -12,7 +12,7 @@ public class LambdaHandler implements RequestHandler<Object, String> {
     @Override
     public String handleRequest(Object input, Context context) {
         // Log a simple message
-        logger.info("Lambda function invoked with request: {}", context);
+        logger.info("Lambda function invoked with DEFAULT LOGLEVEL - " + Env.get("LOGLEVEL") + " and request: ", context);
 
         logger.debug("Lambda function completed");
 

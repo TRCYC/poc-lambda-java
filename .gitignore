@@ -8,6 +8,7 @@ node_modules/
 dist/
 build/
 .gradle/
+bin/
 
 # Compiled Java class files
 *.class
@@ -49,4 +50,4 @@ Thumbs.db
 
 venv/
 log.txt
-.vscode/settings.json
+.vscode/*
