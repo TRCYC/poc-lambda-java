@@ -9,7 +9,11 @@ public class LambdaHandlerTest {
 
     @Test
     public void testHandleRequest() {
-        // Arrange
+        
+        // Uncomment for local setuo. and execution. Set the environment variable for testing
+        System.setProperty("ENV", "dev");
+        LocalEnvSetup.setupEnvironment();
+
         LambdaHandler handler = new LambdaHandler();
         Context context = null; // Mock or create a context if needed
 
