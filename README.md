@@ -150,6 +150,7 @@ private static final Map<String, String> DEFAULTS = Map.of(
 
 For any issues or questions, contact the repository maintainer.
 
+
 ---
 
 *For more details, see the source files and workflows in this repository. [Browse the repo](https://github.com/TRCYC/poc-lambda-java) for up-to-date info.*
