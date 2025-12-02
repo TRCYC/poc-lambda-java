@@ -14,7 +14,7 @@ public class LambdaHandler implements RequestHandler<Object, String> {
         // Log a simple message
         logger.info("Lambda function invoked with DEFAULT LOGLEVEL - " + Env.get("LOGLEVEL") + " and request: ", context);
 
-        logger.debug("Lambda function completed");
+        logger.debug("Lambda function completed Successfully");
 
 
         // Return a basic response
